@@ -1,4 +1,6 @@
 language: cpp
+os: linux
+dist: trusty
 
 compiler:
   - g++
