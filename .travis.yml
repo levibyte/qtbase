@@ -23,7 +23,7 @@ addons:
     - freeglut3-dev  
     - mesa-utils  
     - mesa-common-dev 
-    - libegl1-mesa-dev n
+    - libegl1-mesa-dev
     - ninja-build
 
 compiler:
