@@ -12,7 +12,7 @@ addons:
   coverity_scan:
     project:
       name: levibyte/qtbase
-    build_command_prepend: "./configure -prefix . -developer-build -no-headersclean -debug -nomake-tests -c++std c++14 -no-pch -opensource -confirm-license"
+    build_command_prepend: "./configure -prefix . -developer-build -no-headersclean -debug -nomake-tests -c++std c++14 -no-pch -opensource -confirm-license -cmake"
     build_command: "ninja src/corelib/all"
     branch_pattern: coverity
     notification_email: baghi.blbul@gmail.com
@@ -35,7 +35,7 @@ before_script:
   - sudo apt-get install freeglut3-dev  mesa-utils  mesa-common-dev libegl1-mesa-dev ninja-build
   
 script:
-  - ./configure -prefix . -developer-build -no-headersclean -debug -nomake-tests -c++std c++14 -no-pch -opensource -confirm-license
+  - ./configure -prefix . -developer-build -no-headersclean -debug -nomake-tests -c++std c++14 -no-pch -opensource -confirm-license -cmake
   - ninja src/corelib/all
 
 
