@@ -24,7 +24,7 @@ addons:
     - mesa-utils  
     - mesa-common-dev 
     - libegl1-mesa-dev n
-    - inja-build
+    - ninja-build
 
 compiler:
   - gcc
