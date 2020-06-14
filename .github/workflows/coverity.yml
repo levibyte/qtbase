@@ -1,0 +1,56 @@
+name: coverity
+
+on: push
+
+jobs:
+
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: restore ccache
+      id: ccache
+      uses: actions/cache@v2
+      with:
+        path: ~/.ccache
+        # "github.run_id" is unique, which causes the cache to always get
+        # saved at the end of a successful run.
+        key:  ccache-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+        # As the unique "key" above will never be found in the cache when the
+        # job starts, we need these broader "restore-keys" in order to match
+        # and restore the most recent cache.
+        restore-keys: |
+          ccache-${{ runner.os }}-${{ github.ref }}-
+          ccache-${{ runner.os }}-
+
+    - name: install build dependencies
+      run:  sudo apt-get install libgl-dev libglu-dev libpcre2-dev libz-dev libfreetype6-dev libpng-dev libjpeg-dev libsqlite3-dev
+    - name: install compiler tools
+      run:  sudo apt-get install ccache
+    - name: print versions
+      run: |
+        gcc --version    | head -1
+        cmake --version  | head -1
+        echo Ninja `ninja --version`
+        ccache --version | head -1
+
+    - name: make build directory
+      run:  mkdir build
+    - name: configure
+      working-directory: build
+      run:  ../configure -cmake -opensource -confirm-license \
+        \ -debug -no-optimize-debug -nomake tests -nomake examples \
+        \ -no-harfbuzz -no-iconv \
+        \ -system-pcre -system-zlib -system-freetype -system-libpng -system-libjpeg -system-sqlite \
+        \ -- -DFEATURE_system_sqlite=ON -DQT_NO_MAKE_TESTS=ON -DQT_NO_MAKE_EXAMPLES=ON \
+        \ -DQT_USE_CCACHE=ON -DBUILD_WITH_PCH=OFF
+    - name: ninja
+      working-directory: build
+      run: ninja
+
+    - name: various stats
+      # Print ccache utilization statistics, then reset them.
+      run:  ccache -s && ccache -z
