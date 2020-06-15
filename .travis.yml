@@ -12,8 +12,8 @@ addons:
   coverity_scan:
     project:
       name: levibyte/qtbase
-    build_command_prepend: ./configure -developer-build -nomake tests -nomake examples -no-pch -opensource -confirm-license -debug -no-framework -no-headersclean -no-opengl ; cd src/corelib
-    build_command: "make -j8"
+    build_command_prepend: ./configure -developer-build -nomake tests -nomake examples -no-pch -opensource -confirm-license -debug -no-framework -no-headersclean -no-opengl
+    build_command: "cd src/corelib; make -j8"
     branch_pattern: coverity2
     notification_email: baghi.blbul@gmail.com
   apt:
