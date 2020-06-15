@@ -1,0 +1,33 @@
+env:
+  global:
+  -  secure: "C9HFS4w+VNbVf/6g4iTDMOWjPI/jtr85ro+xxWrKteLNO9MMLI5OZ0n24f0XDYz9fHKY2bfyTx/lp7Woz28K6b53Kq4Tf559pWSw8oO+d71pyVvfOEwUc052f6Ef5+Pz9iW0iKQ0z3/6EucgWi9ZhsVtTiLX7r4wjb7FjM1j2o2tHiLPvuK5OcqJkaev0HGelsHlm4HtAvDgojdQTi7vsRbcdukJZlL+p9NsKYt4xGYCUmayIXU5x5MEnrZwqaioRWcWIeOw3aQcz2Q6ulkl5wV0bc3FYrKEg9j5kYqMdUMTTmaN8ImcIXJDcfDZpRlpFE6iZNFnqX6yocDnkirw1GMUoKLwoLuIG0xtxVg52qzyw3wMW8wNzh6Tq3ztMyqsFbSsbEPNuBpuW1NS6ajzPrH9NR7OPlrfI1pRoedNwqZKTe9RiMK1HShdeEYQgEf+S4aFSHVgYENZjXadfmqpqVgqWc66m962SP6f1iXnk/KMhDVPhUJiKs/kTSHoYdadeTfU6iwUNz9Yn8c02YlStPs/RD/rIKnj/yuPNXC4/DYEiGRZTism5+bMZ6UASYoE5eZrXYavbfaWAF5iZH0wvX2pXdIhzx8l8MzNQaSmBgiza/q+VByAsOt5lti2B/y4azHEIpR/dWrJWIlzb0r4f70mRACiAd1Kqs0eGOdsPVo="
+
+language: cpp
+os: linux
+compiler: gcc
+dist: Bionic
+sudo: required
+
+addons:
+  coverity_scan:
+    project:
+      name: levibyte/qtbase
+    build_command_prepend: ./configure -developer-build -nomake tests -nomake examples -no-pch -opensource -confirm-license -debug -no-framework -no-headersclean -no-opengl
+    build_command: "make -j8"
+    branch_pattern: coverity2
+    notification_email: baghi.blbul@gmail.com
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - freeglut3-dev  
+    - mesa-utils  
+    - mesa-common-dev 
+    - libegl1-mesa-dev
+    - ninja-build
+
+compiler:
+  - gcc
+
+
+
